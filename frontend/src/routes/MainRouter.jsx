@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import SignipForm from "../components/register";
-import LoginForm from "../components/login";
+import Register from "../components/Register";
+import Login from "../components/Login";
 import BlogCreate from "../pages/CreateBlog";
 import DashboardBlogs from "../pages/DashboardBlogs";
 import EditBlog from "../pages/EditBlog";
@@ -15,8 +15,8 @@ const MainRouter = () => {
     <Routes>
       <Route path="*" element={<NotFound />} /> 
 
-      <Route path="/register" element={<SignipForm />} />
-      <Route path="/login" element={<LoginForm />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
 
       <Route path="/" element={<ProtectedRoute> <Home /> </ProtectedRoute>}/>
 
