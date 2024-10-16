@@ -9,7 +9,7 @@ export const createBlog = async (req, res) => {
       return res.status(400).json({ error: "All fields are required" });
     }
 
-    const blogDatas = JSON.parse(content);
+    const blogDatas = content;
 
     const newBlog = new BlogModel({
       title,
