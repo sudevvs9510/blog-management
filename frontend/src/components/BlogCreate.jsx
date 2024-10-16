@@ -26,18 +26,19 @@ export default function BlogCreator() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const userData = localStorage.getItem("userId")
-    if (!userData) {
+    const authorId = localStorage.getItem("userId")
+    if (!authorId) {
       toast.error("User data not found. Please log in.")
-      
+      return
     }
-    const parsedData = JSON.parse(userData)
-    const authorId = parsedData.userId
+
+    if (!validateFields()) return
+
 
     const blogData = {
       title,
       description,
-      content: JSON.stringify(contentBlocks),
+      content: contentBlocks,
       imageUrl,
       author: authorId,
     }
@@ -54,6 +55,33 @@ export default function BlogCreator() {
       console.error("Error creating blog:", error)
       toast.error("Error creating blog")
     }
+  }
+
+  const validateFields = () => {
+    if (!title) {
+      toast.error("Title is required.")
+      return false
+    }
+    if (!description) {
+      toast.error("Description is required.")
+      return false
+    }
+    if (contentBlocks.length === 0) {
+      toast.error("At least one content block is required.")
+      return false
+    }
+    for (let i = 0; i < contentBlocks.length; i++) {
+      const block = contentBlocks[i]
+      if ((block.type === "text" || block.type === "header") && !block.content.trim()) {
+        toast.error(`Content block ${i + 1} cannot be empty.`)
+        return false
+      }
+      if (block.type === "image" && !block.content) {
+        toast.error(`Image block ${i + 1} must have an image uploaded.`)
+        return false
+      }
+    }
+    return true
   }
 
   const handleImageChange = async (e, index) => {
