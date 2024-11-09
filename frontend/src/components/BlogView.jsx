@@ -134,7 +134,7 @@ export default function BlogView() {
         </div>
         <div className="container flex flex-col items-center mx-auto px-6 relative z-10">
           <p className="text-sm mb-2">{new Date(blog.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4">{blog.title}</h1>
+          <h1 className="text-center text-4xl md:text-6xl font-bold leading-tight mb-4">{blog.title}</h1>
         </div>
       </div>
 

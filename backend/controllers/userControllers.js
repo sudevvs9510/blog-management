@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import UserModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_TOKEN
+const JWT_SECRET = process.env.JWT_TOKEN;
 
 export const register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -26,20 +26,22 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-    const {email, password} = req.body
+  const { email, password } = req.body;
   try {
-    const user = await UserModel.findOne({ email })
-    if(!user){
-        return res.status(401).json({message: 'Invalid email or password'})
-    } else if(user.isBlocked){
-        return res.status(401).json({message: 'Your account has been blocked'})
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    } else if (user.isBlocked) {
+      return res.status(401).json({ message: "Your account has been blocked" });
     } else {
-        const isValidPassword = await bcrypt.compare(password, user.password)
-        if(!isValidPassword){
-            return res.status(401).json({ message:"Invalid password"})
-        }
-        const token = jwt.sign({ userId: user._id}, JWT_SECRET, {expiresIn: '24h'})
-        return res.status(200).json({ token, userId: user._id})
+      const isValidPassword = await bcrypt.compare(password, user.password);
+      if (!isValidPassword) {
+        return res.status(401).json({ message: "Invalid password" });
+      }
+      const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
+        expiresIn: "24h",
+      });
+      return res.status(200).json({ token, userId: user._id });
     }
   } catch (error) {
     console.log(error);
