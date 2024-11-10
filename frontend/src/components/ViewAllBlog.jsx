@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { FaUserAlt, FaCalendarAlt } from "react-icons/fa"
 import authAxios from "../api/api"
 import toast from "react-hot-toast"
+import Loader from "../components/Loader"
 
 export default function ViewAllBlogs() {
   const [blogs, setBlogs] = useState([])
@@ -28,7 +29,7 @@ export default function ViewAllBlogs() {
   }, [])
 
   if (loading) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>
+    return <div className="flex justify-center items-center h-screen"> <Loader /> </div>
   }
 
   if (error) {

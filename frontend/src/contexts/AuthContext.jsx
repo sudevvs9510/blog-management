@@ -3,6 +3,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import authAxios from "../api/api";
 import toast from "react-hot-toast";
+import Loader from "../components/Loader"
 
 
 const AuthContext = createContext()
@@ -10,6 +11,8 @@ const AuthContext = createContext()
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true); 
+
+    
 
     useEffect(()=>{
         const storedUser = localStorage.getItem("userId")
@@ -22,6 +25,10 @@ export const AuthProvider = ({ children }) => {
         }
         setLoading(false);
     },[])
+
+    if (loading) {
+        return <Loader />;
+      }
 
 
     const loginAPI = async (email, password) => {
@@ -64,6 +71,8 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     )
 }
+
+
 
 export const useAuth = () =>{
     const context = useContext(AuthContext)
