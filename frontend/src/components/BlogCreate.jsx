@@ -156,92 +156,101 @@ export default function BlogCreator() {
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold mb-2 text-gray-800">Content Blocks</h2>
-            <div className="space-y-4">
-              {contentBlocks.map((block, index) => (
-                <div key={index} className="flex items-start space-x-2 bg-gray-50 p-4 rounded-lg">
-                  <div className="flex flex-col space-y-2">
-                    <button
-                      type="button"
-                      onClick={() => moveBlock(index, -1)}
-                      disabled={index === 0}
-                      className="text-gray-500 hover:text-gray-700 disabled:opacity-50"
-                    >
-                      <FaArrowUp />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => moveBlock(index, 1)}
-                      disabled={index === contentBlocks.length - 1}
-                      className="text-gray-500 hover:text-gray-700 disabled:opacity-50"
-                    >
-                      <FaArrowDown />
-                    </button>
-                  </div>
-                  <select
-                    value={block.type}
-                    onChange={(e) => {
-                      const updatedBlocks = [...contentBlocks]
-                      updatedBlocks[index].type = e.target.value
-                      setContentBlocks(updatedBlocks)
-                    }}
-                    className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-                  >
-                    <option value="text">Text</option>
-                    <option value="header">Header</option>
-                    <option value="image">Image</option>
-                  </select>
-
-                  {block.type === "text" || block.type === "header" ? (
-                    <input
-                      type="text"
-                      value={block.content}
-                      onChange={(e) => updateContentBlock(index, e.target.value)}
-                      placeholder={`Enter ${block.type} content`}
-                      className="flex-grow px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-                    />
-                  ) : (
-                    <div className="flex items-center space-x-2 flex-grow">
-                      {block.content ? (
-                        <img src={block.content} alt="Uploaded" className="h-16 w-16 object-cover rounded" />
-                      ) : (
-                        <div className="relative">
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => handleImageChange(e, index)}
-                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                          />
-                          <div className="px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 flex items-center">
-                            <FaImage className="mr-2" />
-                            Choose Image
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const updatedBlocks = contentBlocks.filter((_, i) => i !== index)
-                      setContentBlocks(updatedBlocks)
-                    }}
-                    className="text-red-600 hover:text-red-800 p-2 rounded-full hover:bg-red-100 transition-colors"
-                  >
-                    <AiOutlineClose className="h-5 w-5" />
-                  </button>
-                </div>
-              ))}
-            </div>
+    <h2 className="text-lg font-semibold mb-2 text-gray-800">Content Blocks</h2>
+    <div className="space-y-4">
+      {contentBlocks.map((block, index) => (
+        <div
+          key={index}
+          className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 bg-gray-50 p-4 rounded-lg"
+        >
+          <div className="flex sm:flex-col space-y-2 sm:space-y-0 sm:space-x-0">
             <button
               type="button"
-              onClick={() => addContentBlock("text")}
-              className="mt-4 flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-colors"
+              onClick={() => moveBlock(index, -1)}
+              disabled={index === 0}
+              className="text-gray-500 hover:text-gray-700 disabled:opacity-50"
             >
-              <AiOutlinePlusCircle className="mr-2 h-5 w-5" /> Add Block
+              <FaArrowUp />
+            </button>
+            <button
+              type="button"
+              onClick={() => moveBlock(index, 1)}
+              disabled={index === contentBlocks.length - 1}
+              className="text-gray-500 hover:text-gray-700 disabled:opacity-50"
+            >
+              <FaArrowDown />
             </button>
           </div>
+
+          <div className="w-full sm:w-auto">
+            <select
+              value={block.type}
+              onChange={(e) => {
+                const updatedBlocks = [...contentBlocks];
+                updatedBlocks[index].type = e.target.value;
+                setContentBlocks(updatedBlocks);
+              }}
+              className="w-full sm:w-auto px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+            >
+              <option value="text">Text</option>
+              <option value="header">Header</option>
+              <option value="image">Image</option>
+            </select>
+          </div>
+
+          <div className="flex-grow w-full sm:w-auto">
+            {block.type === "text" || block.type === "header" ? (
+              <input
+                type="text"
+                value={block.content}
+                onChange={(e) => updateContentBlock(index, e.target.value)}
+                placeholder={`Enter ${block.type} content`}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+              />
+            ) : (
+              <div className="flex items-center space-x-2 flex-grow">
+                {block.content ? (
+                  <img src={block.content} alt="Uploaded" className="h-16 w-16 object-cover rounded" />
+                ) : (
+                  <div className="relative w-full sm:w-auto">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleImageChange(e, index)}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    />
+                    <div className="px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 flex items-center">
+                      <FaImage className="mr-2" />
+                      Choose Image
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => {
+              const updatedBlocks = contentBlocks.filter((_, i) => i !== index);
+              setContentBlocks(updatedBlocks);
+            }}
+            className="text-red-600 hover:text-red-800 p-2 rounded-full hover:bg-red-100 transition-colors"
+          >
+            <AiOutlineClose className="h-5 w-5" />
+          </button>
+        </div>
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={() => addContentBlock("text")}
+          className="mt-4 flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 transition-colors"
+        >
+          <AiOutlinePlusCircle className="mr-2 h-5 w-5" /> Add Block
+        </button>
+      </div>
+
 
           <div className="flex justify-center">
             <button

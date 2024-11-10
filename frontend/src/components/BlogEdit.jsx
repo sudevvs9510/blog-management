@@ -174,84 +174,86 @@ export default function EditBlog() {
           <div>
             <h2 className="text-lg font-semibold mb-2 text-gray-800">Content Blocks</h2>
             <div className="space-y-4">
-              {contentBlocks.map((block, index) => (
-                <div key={index} className="flex items-start space-x-2 bg-gray-50 p-4 rounded-lg">
-                  <div className="flex flex-col space-y-2">
-                    <button
-                      type="button"
-                      onClick={() => handleSwapBlocks(index, "up")}
-                      disabled={index === 0}
-                      className="text-gray-500 hover:text-gray-700 disabled:opacity-50"
-                    >
-                      <FaArrowUp />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleSwapBlocks(index, "down")}
-                      disabled={index === contentBlocks.length - 1}
-                      className="text-gray-500 hover:text-gray-700 disabled:opacity-50"
-                    >
-                      <FaArrowDown />
-                    </button>
-                  </div>
-                  <select
-                    value={block.type}
-                    onChange={(e) => {
-                      const updatedBlocks = [...contentBlocks]
-                      updatedBlocks[index].type = e.target.value
-                      setContentBlocks(updatedBlocks)
-                    }}
-                    className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-                  >
-                    <option value="text">Text</option>
-                    <option value="header">Header</option>
-                    <option value="image">Image</option>
-                  </select>
-
-                  {block.type === "text" || block.type === "header" ? (
-                    <input
-                      type="text"
-                      value={block.content}
+                {contentBlocks.map((block, index) => (
+                  <div key={index} className="flex flex-col sm:flex-row sm:items-start sm:space-x-4 bg-gray-50 p-4 rounded-lg">
+                    <div className="flex space-x-2 sm:flex-col sm:space-y-2">
+                      <button
+                        type="button"
+                        onClick={() => handleSwapBlocks(index, "up")}
+                        disabled={index === 0}
+                        className="text-gray-500 hover:text-gray-700 disabled:opacity-50"
+                      >
+                        <FaArrowUp />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleSwapBlocks(index, "down")}
+                        disabled={index === contentBlocks.length - 1}
+                        className="text-gray-500 hover:text-gray-700 disabled:opacity-50"
+                      >
+                        <FaArrowDown />
+                      </button>
+                    </div>
+                
+                    <select
+                      value={block.type}
                       onChange={(e) => {
                         const updatedBlocks = [...contentBlocks]
-                        updatedBlocks[index].content = e.target.value
+                        updatedBlocks[index].type = e.target.value
                         setContentBlocks(updatedBlocks)
                       }}
-                      placeholder={`Enter ${block.type} content`}
-                      className="flex-grow px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-                    />
-                  ) : (
-                    <div className="flex items-center space-x-2 flex-grow">
-                      {block.content ? (
-                        <img src={block.content} alt="Uploaded" className="h-16 w-16 object-cover rounded" />
-                      ) : (
-                        <div className="relative">
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => handleImageChange(e, index)}
-                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                          />
-                          <div className="px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 flex items-center">
-                            <FaImage className="mr-2" />
-                            Choose Image
+                      className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 sm:w-48"
+                    >
+                      <option value="text">Text</option>
+                      <option value="header">Header</option>
+                      <option value="image">Image</option>
+                    </select>
+                    
+                    {block.type === "text" || block.type === "header" ? (
+                      <input
+                        type="text"
+                        value={block.content}
+                        onChange={(e) => {
+                          const updatedBlocks = [...contentBlocks]
+                          updatedBlocks[index].content = e.target.value
+                          setContentBlocks(updatedBlocks)
+                        }}
+                        placeholder={`Enter ${block.type} content`}
+                        className="flex-grow sm:w-80 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+                      />
+                    ) : (
+                      <div className="flex items-center space-x-2 flex-grow sm:w-80">
+                        {block.content ? (
+                          <img src={block.content} alt="Uploaded" className="h-16 w-16 object-cover rounded" />
+                        ) : (
+                          <div className="relative">
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => handleImageChange(e, index)}
+                              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                            />
+                            <div className="px-4 py-2 border border-gray-300 rounded-md bg-white text-gray-700 flex items-center">
+                              <FaImage className="mr-2" />
+                              Choose Image
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
+                        )}
+                      </div>
+                    )}
 
-                  <button
-                    type="button"
-                    onClick={() => handleDeleteBlock(index)}
-                    className="text-red-600 hover:text-red-800 p-2 rounded-full hover:bg-red-100 transition-colors"
-                  >
-                    <MdDeleteOutline size={24} />
-                  </button>
-                </div>
-              ))}
-            </div>
-            <button
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteBlock(index)}
+                      className="text-red-600 hover:text-red-800 p-2 rounded-full hover:bg-red-100 transition-colors"
+                    >
+                      <MdDeleteOutline size={24} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+              
+              <button
               type="button"
               onClick={() => {
                 setContentBlocks([...contentBlocks, { type: "text", content: "" }])
